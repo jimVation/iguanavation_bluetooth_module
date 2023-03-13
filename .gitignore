@@ -1,0 +1,9 @@
+*.d
+*.o
+*.py
+*.map
+*.ld
+*.ind
+*.elf
+*.zip
+*.emSession

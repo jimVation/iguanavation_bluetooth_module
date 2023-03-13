@@ -1,0 +1,6 @@
+Each time the source is compiled in SES, a zip file is created (in the source/ses folder).
+Email zip file to yourself so you have it on your phone.
+Use "nRF Device Firmware Update" app (on phone) to upload zip file.
+
+Note: If using a new Iguana Smart Sack module, it goes to sleep after 10 seconds of inactivity, so you have to be fairly quick to connect (in the DFU app) and start the upload.
+
