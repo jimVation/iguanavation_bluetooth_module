@@ -1,5 +1,5 @@
 This repo is an open source version of firmware for the Iguana Smart Sack available at https://www.amazon.com/Smart-Sack-Iguana/dp/B07SYBHXJ1/
-It can be modified and uploaded to the accelerometer module in the Smart Sack. See the file DFU notes for more info on the Over The Air (OTA) update process.
+It can be modified and uploaded to the Bluetooth module in the Smart Sack. See the file DFU notes for more info on the Over The Air (OTA) update process.
 
 All required Nordic SDK files are included in this repo.
 IDE: Segger SES for ARM 7.10a (free to use for Nordic microcontrollers)
