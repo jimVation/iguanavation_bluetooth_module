@@ -50,7 +50,7 @@ static uint8_t       accel_req_data_rx_buf[7] = { 0 };    // RX buffer
 
 static uint32_t received_count = 0;
 
-bool new_accel_data_ready = false;
+volatile bool new_accel_data_ready = false;
 
 int16_t  accel_x_raw;
 int16_t  accel_y_raw;

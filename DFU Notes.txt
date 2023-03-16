@@ -1,6 +1,19 @@
 Each time the source is compiled in SES, a zip file is created (in the source/ses folder).
 Email zip file to yourself so you have it on your phone.
-Use "nRF Device Firmware Update" app (on phone) to upload zip file.
 
-Note: If using a new Iguana Smart Sack module, it goes to sleep after 10 seconds of inactivity, so you have to be fairly quick to connect (in the DFU app) and start the upload.
+Use "nRF Device Firmware Update" app (on phone) to upload zip file.
+In the app settings, set the following:
+Packets receipt notification: On (checked)
+Reboot time: 1000 ms
+Scan timeout: 2000 ms
+The rest of the settings can be left as defaults
+
+On the first try, it often fails with error "The device does not support nRF5 DFU".  after the failure, select device again and retry.
+
+Note: If using a new Iguana Smart Sack module (first time updating):
+1) take out battery (if installed)
+2) Wait until you are in the DFU app, and have completed the File selection step
+3) Then press Select (for Device) and then insert the battery in module.
+4) Module goes to sleep after 10 seconds of inactivity, so you have to be fairly quick to connect (in the DFU app) and start the upload.
+5) The new firmware has a timeout of 60 seconds so it is easier to connect and update before it goes to sleep.
 
