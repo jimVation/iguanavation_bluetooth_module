@@ -1,7 +1,7 @@
 This repo is an open source version of firmware for the Iguana Smart Sack available at https://www.amazon.com/Smart-Sack-Iguana/dp/B07SYBHXJ1/
 It can be modified and uploaded to the Bluetooth module in the Smart Sack. See the file DFU notes for more info on the Over The Air (OTA) update process.
 
-All required Nordic SDK files are included in this repo.
+All required Nordic SDK files are included in this repo. (SDK 15.3)
 IDE: Segger SES for ARM 7.10a (free to use for Nordic microcontrollers)
 
 Default behavior: module wakes up when it detects freefall. Accelerometer values (x, y, z) are updated in the advertising data once per second. The module goes to sleep after 60 seconds. A connection can be made from a mobile device using nRF Connect. Text commands can be sent on the "Unknown Service".
