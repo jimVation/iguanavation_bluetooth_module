@@ -30,6 +30,7 @@
 #include "app_error.h"
 #include "ble_advdata.h"
 #include "ble_conn_state.h"
+#include "nrf_soc.h"
 
 // Local App files
 #include "ble_data_update.h"
@@ -126,11 +127,15 @@ void updateAdvertisingData(void)
 {
 	static uint8_t bufferIndex = 0;
     ret_code_t errCode;
+    int32_t temperature_c_0_25_increments;
+
+    // Get core temperature
+    sd_temp_get(&temperature_c_0_25_increments);
 	
 	static ble_advdata_manuf_data_t    jaet2l_mfg_info;
 	static uint8_t temp_buff[MFG_DATA_BYTES_SIZE];
 	
-	// Get latest accel data
+	// Get latest data
 	temp_buff[0] = accel_x_raw >> 8;
 	temp_buff[1] = accel_x_raw & 0x00FF;
 	temp_buff[2] = accel_y_raw >> 8;
@@ -139,7 +144,7 @@ void updateAdvertisingData(void)
 	temp_buff[5] = accel_z_raw & 0x00FF;
 	temp_buff[6] = 0x00;
 	temp_buff[7] = 0x00;
-	temp_buff[8] = 0x00;	
+	temp_buff[8] = (uint8_t)temperature_c_0_25_increments;
 	
 	jaet2l_mfg_info.company_identifier = 0x0733;
 	jaet2l_mfg_info.data.size = MFG_DATA_BYTES_SIZE;
