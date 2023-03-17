@@ -44,6 +44,7 @@
 #include "ble_nus_iss.h"
 #include "ble_nus_main.h"
 #include "ble_dis.h"
+#include "ble_nus_main.h"
 
 // dfu files
 #include "ble_dfu.h"
@@ -61,8 +62,8 @@
 
 // Device Information Service values
 #define DIS_MANUFACTURER_NAME     "Iguanavation Inc"                      
-#define DIS_FW_VERSION            "2.1"
-#define DIS_HW_VERSION            "18SEP2019"
+#define DIS_FW_VERSION            "3.0"
+#define DIS_HW_VERSION            "17MAR2023"
 #define DIS_MODEL_NUMBER          "ISS001US"
 
 // For ADV Interval, Apple recommends 152.5ms if their are problems (=244 * 0.625)
@@ -571,6 +572,7 @@ static void ble_dfu_evt_handler(ble_dfu_buttonless_evt_type_t event)
     }
 }
 
+#if (BLE_DFU_ENABLED == 1)
 //***************************************************************
 //Function for initializing services that will be used by the application.
 static void dfu_service_init(void)
@@ -583,6 +585,7 @@ static void dfu_service_init(void)
     err_code = ble_dfu_buttonless_init(&dfus_init);
     APP_ERROR_CHECK(err_code);
 }
+#endif
 
 //***************************************************************
 void start_ble_system(void)
@@ -594,7 +597,9 @@ void start_ble_system(void)
     gap_params_init();
     gatt_init();
     advertising_init();	
+#if (BLE_DFU_ENABLED == 1)
     dfu_service_init();
+#endif
     conn_params_init();	    
     advertising_start();
 }

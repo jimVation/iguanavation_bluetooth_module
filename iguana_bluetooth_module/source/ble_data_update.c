@@ -34,15 +34,15 @@
 // Local App files
 #include "ble_data_update.h"
 #include "ble_service.h"
-#include "spi_lis2hh12.h"
 #include "ble_nus_main.h"
+#include "temperature.h"
 
 #define NUS_DATA_BUFFER_LENGTH     240
 #define NUS_HEADER_LENGTH   2
 #define NUS_FOOTER_LENGTH   1
 
 // data configuration variables
-bool transmitAccelDataEnabled = false;
+bool streamDataEnabled = false;
 
 // Two sets of buffers (ping pong) needed for dynamically changing advertising data
 static uint8_t enc_adv_data_buffer1[BLE_GAP_ADV_SET_DATA_SIZE_MAX];
@@ -70,11 +70,11 @@ static ble_gap_adv_data_t advertisingScanResponseBuffer[2] =
 //****************************************************************
 void handleDisconnectForStreamingData(void)
 {   // turn off streaming on disconnect
-    transmitAccelDataEnabled = false;
+    streamDataEnabled = false;
 }
 
 //****************************************************************
-void transmitAccelData(void)
+void transmitStreamData(void)
 {
 	static uint8_t dataPointer = 0;
     uint8_t dataBytesAdded = 0;
@@ -92,13 +92,8 @@ void transmitAccelData(void)
         dataPointer = NUS_HEADER_LENGTH;     // skip the length byte for now
     }
 	
-	// Get latest accel data
-    temp_buff[dataPointer++] = accel_x_mg >> 8;
-    temp_buff[dataPointer++] = accel_x_mg & 0x00FF;
-    temp_buff[dataPointer++] = accel_y_mg >> 8;
-    temp_buff[dataPointer++] = accel_y_mg & 0x00FF;
-    temp_buff[dataPointer++] = accel_z_mg >> 8;
-    temp_buff[dataPointer++] = accel_z_mg & 0x00FF;
+	// Get latest data
+    temp_buff[dataPointer++] = (uint8_t)temperature_c_0_25_increments;
 
 	dataBytesAdded = dataPointer - NUS_HEADER_LENGTH;
 
@@ -130,22 +125,22 @@ void updateAdvertisingData(void)
 	static ble_advdata_manuf_data_t    jaet2l_mfg_info;
 	static uint8_t temp_buff[MFG_DATA_BYTES_SIZE];
 	
-	// Get latest accel data
-	temp_buff[0] = accel_x_raw >> 8;
-	temp_buff[1] = accel_x_raw & 0x00FF;
-	temp_buff[2] = accel_y_raw >> 8;
-	temp_buff[3] = accel_y_raw & 0x00FF;
-	temp_buff[4] = accel_z_raw >> 8;
-	temp_buff[5] = accel_z_raw & 0x00FF;
+	// Get latest data
+	temp_buff[0] = (uint8_t)temperature_c_0_25_increments;
+	temp_buff[1] = 0x00;
+	temp_buff[2] = 0x00;
+	temp_buff[3] = 0x00;
+	temp_buff[4] = 0x00;
+	temp_buff[5] = 0x00;
 	temp_buff[6] = 0x00;
 	temp_buff[7] = 0x00;
-	temp_buff[8] = 0x00;	
+	temp_buff[8] = 0x00;
 	
 	jaet2l_mfg_info.company_identifier = 0x0733;
 	jaet2l_mfg_info.data.size = MFG_DATA_BYTES_SIZE;
 	jaet2l_mfg_info.data.p_data = &temp_buff[0];
 
-	// Load latest accel data into the advertising data buffer
+	// Load latest data into the advertising data buffer
 	advertising_info.srdata.p_manuf_specific_data  = &jaet2l_mfg_info;	
 	
 	// Load advertising data buffer into the advertising info structure
@@ -167,9 +162,9 @@ void update_ble_data(void)
 {
     if (ble_conn_state_status(m_conn_handle) == BLE_CONN_STATUS_CONNECTED)
     {   // Things to do while connected
-        if (transmitAccelDataEnabled)
+        if (streamDataEnabled)
         {
-            transmitAccelData();
+            transmitStreamData();
         }
     }
     else

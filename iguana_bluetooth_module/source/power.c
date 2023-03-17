@@ -30,26 +30,27 @@
 #include "nrf_sdh.h"
 #include "app_error.h"
 #include "app_timer.h"
+#include "nrf_gpio.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
-// For wakeup pin config
-#include "nrf_delay.h"
-#include "nrf_gpio.h"
-
-#include "spi_lis2hh12.h"
+#define GO_TO_SLEEP_SECONDS 60
+#if (GO_TO_SLEEP_SECONDS < 20)
+#error Awake Time to short to allow for OTA updates
+#endif
 
 typedef enum
 {
 	POWER_STATE_ON,
-	POWER_STATE_SETTING_UP_ACCEL,
 	POWER_STATE_GOING_TO_SLEEP,
+    POWER_STATE_WAIT_FOR_SLEEP,
 } power_states_t;
 
 uint32_t inactivity_timer_seconds = 0;
-uint32_t inactivityTimeLimitSeconds = 60;  // seconds of inactivity (no kicks) until we go to sleep
+uint32_t inactivityTimeLimitSeconds = GO_TO_SLEEP_SECONDS;  // seconds of inactivity (no kicks) until we go to sleep
+
 
 //******************************************************************
 void power_management_init(void)
@@ -64,18 +65,6 @@ void power_management_init(void)
 void idle_state_handle(void)
 {
     nrf_pwr_mgmt_run();
-}
-
-//******************************************************************
-void setup_wake_pin_and_go_to_sleep(void)
-{
-	// Set up pin for waking up from System OFF
-	nrf_gpio_cfg_sense_input(21, NRF_GPIO_PIN_NOPULL, NRF_GPIO_PIN_SENSE_HIGH);
-
-	// Workaround for PAN_028 rev1.1 anomaly 22 - System: Issues with disable System OFF mechanism
-	nrf_delay_ms(1);	
-	
-	nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);	// system off mode	
 }
 
 //******************************************************************
@@ -96,20 +85,21 @@ void update_power_management(uint8_t seconds_since_last_update)
 		case POWER_STATE_ON:
 			if (inactivity_timer_seconds > inactivityTimeLimitSeconds)
 			{
-				//configure_accel_free_fall_detect();
-                                configure_accel_shake_detect();
-				power_state = POWER_STATE_SETTING_UP_ACCEL;
+				power_state = POWER_STATE_GOING_TO_SLEEP;
 			}
 			break;
 		
-		case POWER_STATE_SETTING_UP_ACCEL:
-			// Assuming here that enough time has passed since previous state to complete accel config
-			setup_wake_pin_and_go_to_sleep();
-			power_state = POWER_STATE_GOING_TO_SLEEP;
-			break;
-		
 		case POWER_STATE_GOING_TO_SLEEP:
-			break;
+            // Turn off the LED
+            nrf_gpio_pin_set(LED_PIN);
+            nrf_gpio_cfg_default(LED_PIN);  // disconnect pin to minimize current 
+
+            nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);	// system off mode	
+            power_state = POWER_STATE_WAIT_FOR_SLEEP;
+            break;
+
+        case POWER_STATE_WAIT_FOR_SLEEP:
+            break;
 	}
 }
 
@@ -126,11 +116,10 @@ static bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
         case NRF_PWR_MGMT_EVT_PREPARE_DFU:
             if (!m_ready_for_reset)
             {
-              return false;
+                return false;
             }
             else
             {
-            
                 // Device ready to enter
                 uint32_t err_code;
                 err_code = nrf_sdh_disable_request();
