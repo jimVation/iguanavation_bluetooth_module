@@ -30,12 +30,13 @@
 #include "app_error.h"
 #include "ble_advdata.h"
 #include "ble_conn_state.h"
+#include "nrf_soc.h"
 
 // Local App files
+#include "common.h"
 #include "ble_data_update.h"
 #include "ble_service.h"
 #include "ble_nus_main.h"
-#include "temperature.h"
 
 #define NUS_DATA_BUFFER_LENGTH     240
 #define NUS_HEADER_LENGTH   2
@@ -93,7 +94,12 @@ void transmitStreamData(void)
     }
 	
 	// Get latest data
-    temp_buff[dataPointer++] = (uint8_t)temperature_c_0_25_increments;
+    temp_buff[dataPointer++] = accel_x_mg >> 8;
+    temp_buff[dataPointer++] = accel_x_mg & 0x00FF;
+    temp_buff[dataPointer++] = accel_y_mg >> 8;
+    temp_buff[dataPointer++] = accel_y_mg & 0x00FF;
+    temp_buff[dataPointer++] = accel_z_mg >> 8;
+    temp_buff[dataPointer++] = accel_z_mg & 0x00FF;
 
 	dataBytesAdded = dataPointer - NUS_HEADER_LENGTH;
 
@@ -119,22 +125,26 @@ void transmitStreamData(void)
 //****************************************************************
 void updateAdvertisingData(void)
 {
-	static uint8_t bufferIndex = 0;
+    static uint8_t bufferIndex = 0;
     ret_code_t errCode;
+    int32_t temperature_c_0_25_increments;
+
+    // Get core temperature
+    sd_temp_get(&temperature_c_0_25_increments);
 	
 	static ble_advdata_manuf_data_t    jaet2l_mfg_info;
 	static uint8_t temp_buff[MFG_DATA_BYTES_SIZE];
 	
 	// Get latest data
-	temp_buff[0] = (uint8_t)temperature_c_0_25_increments;
-	temp_buff[1] = 0x00;
-	temp_buff[2] = 0x00;
-	temp_buff[3] = 0x00;
-	temp_buff[4] = 0x00;
-	temp_buff[5] = 0x00;
+	temp_buff[0] = accel_x_raw >> 8;
+	temp_buff[1] = accel_x_raw & 0x00FF;
+	temp_buff[2] = accel_y_raw >> 8;
+	temp_buff[3] = accel_y_raw & 0x00FF;
+	temp_buff[4] = accel_z_raw >> 8;
+	temp_buff[5] = accel_z_raw & 0x00FF;
 	temp_buff[6] = 0x00;
 	temp_buff[7] = 0x00;
-	temp_buff[8] = 0x00;
+	temp_buff[8] = (uint8_t)temperature_c_0_25_increments;
 	
 	jaet2l_mfg_info.company_identifier = 0x0733;
 	jaet2l_mfg_info.data.size = MFG_DATA_BYTES_SIZE;

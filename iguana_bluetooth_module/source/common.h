@@ -26,61 +26,16 @@
  *
  */
 
-#include <stdint.h>
+#ifndef COMMON_H
+#define COMMON_H
 
-#include "app_error.h"
-#include "nrf_gpio.h"
-#include "ble_dfu.h"
+extern int16_t accel_x_raw;
+extern int16_t accel_y_raw;
+extern int16_t accel_z_raw;
 
-// ISS Files
-#include "common.h"
-#include "iss_timers.h"
-#include "power.h"
-#include "ble_service.h"
-#include "ble_data_update.h"
+// Values converted to milli gravities
+extern int16_t  accel_x_mg;
+extern int16_t  accel_y_mg;
+extern int16_t  accel_z_mg;
 
-//****************************************************************
-int main(void)
-{
-    ret_code_t err_code;
-
-#if (BLE_DFU_ENABLED == 1)
-    // Initialize the async SVCI interface to bootloader before any interrupts are enabled
-    err_code = ble_dfu_buttonless_async_svci_init();
-    APP_ERROR_CHECK(err_code);
 #endif
-
-    // Initialize LED
-    nrf_gpio_cfg_output(LED_PIN);  
-    nrf_gpio_pin_clear(LED_PIN);
-
-    // Create a timer for seconds awake
-    timers_init();
-    power_management_init();
-    start_ble_system();
-
-    // Start the timers
-    application_timers_start();
-
-    // Enter main loop.
-    for (;;)
-    {
-        // Look for a seconds tick (updated in the timer interrupt)
-        if (seconds_awake_updated)
-        { 
-            seconds_awake_updated = false;
-            
-            // Blink LED
-            nrf_gpio_pin_toggle(LED_PIN);  
-
-            // Notify power system of time change and do any time based events
-            update_power_management(1); // pass in 1 as number of seconds since last update
-
-            update_ble_data();
-        }
-
-        idle_state_handle();
-        mainLoopCyclesPerSecondCount++;
-    }
-}
-

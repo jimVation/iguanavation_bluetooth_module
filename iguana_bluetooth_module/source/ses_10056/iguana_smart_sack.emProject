@@ -50,6 +50,8 @@
       <file file_name="../ble_nus_main.h" />
       <file file_name="../ble_service.c" />
       <file file_name="../ble_service.h" />
+      <file file_name="../common.c" />
+      <file file_name="../common.h" />
       <file file_name="../iss_timers.c" />
       <file file_name="../iss_timers.h" />
       <file file_name="../main.c">
@@ -58,8 +60,6 @@
       <file file_name="../power.c" />
       <file file_name="../power.h" />
       <file file_name="../sdk_config.h" />
-      <file file_name="../temperature.c" />
-      <file file_name="../temperature.h" />
     </folder>
     <folder Name="None">
       <file file_name="../../sdk/modules/nrfx/mdk/ses_startup_nrf52840.s" />
@@ -137,7 +137,6 @@
       <file file_name="../../sdk/components/libraries/bootloader/dfu/nrf_dfu_svci.c" />
     </folder>
     <folder Name="nRF_SoftDevice">
-      <file file_name="../../sdk/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c" />
       <file file_name="../../sdk/components/softdevice/common/nrf_sdh.c" />
       <file file_name="../../sdk/components/softdevice/common/nrf_sdh_ble.c">
         <configuration Name="Release" gcc_optimization_level="None" />
