@@ -41,6 +41,11 @@
 
 #include "spi_lis2hh12.h"
 
+#define GO_TO_SLEEP_SECONDS 60
+#if (GO_TO_SLEEP_SECONDS < 20)
+#error Awake Time to short to allow for OTA updates
+#endif
+
 typedef enum
 {
 	POWER_STATE_ON,
@@ -49,7 +54,7 @@ typedef enum
 } power_states_t;
 
 uint32_t inactivity_timer_seconds = 0;
-uint32_t inactivityTimeLimitSeconds = 60;  // seconds of inactivity (no kicks) until we go to sleep
+uint32_t inactivityTimeLimitSeconds = GO_TO_SLEEP_SECONDS;  // seconds of inactivity (no kicks) until we go to sleep
 
 //******************************************************************
 void power_management_init(void)
@@ -130,7 +135,6 @@ static bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
             }
             else
             {
-            
                 // Device ready to enter
                 uint32_t err_code;
                 err_code = nrf_sdh_disable_request();

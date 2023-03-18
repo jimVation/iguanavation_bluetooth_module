@@ -72,9 +72,9 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
         switch (data[0])
         {
             case 'a':
-                transmitAccelDataEnabled = (data[1] - 0x30);
+                streamDataEnabled = (data[1] - 0x30);
 
-                if (transmitAccelDataEnabled)
+                if (streamDataEnabled)
                 {
                     outMessageLength = sprintf(outMessage, "Data streaming on"); 
                 }

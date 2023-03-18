@@ -32,6 +32,8 @@
 #include <stdint.h>
 #include <string.h>		// for memset
 
+#include "common.h"
+
 #define NRFX_SPIM_MOSI_PIN   14
 #define NRFX_SPIM_MISO_PIN   15
 #define NRFX_SPIM_SS_PIN     16
@@ -51,15 +53,6 @@ static uint8_t       accel_req_data_rx_buf[7] = { 0 };    // RX buffer
 static uint32_t received_count = 0;
 
 volatile bool new_accel_data_ready = false;
-
-int16_t  accel_x_raw;
-int16_t  accel_y_raw;
-int16_t  accel_z_raw;
-
-// Values converted to milli gravities
-int16_t  accel_x_mg = 0;
-int16_t  accel_y_mg = 0;
-int16_t  accel_z_mg = 0;
 
 // Tracks what the next accel interrupt should mean
 typedef enum

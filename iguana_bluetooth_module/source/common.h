@@ -26,27 +26,16 @@
  *
  */
 
-#ifndef SPI_LIS2HH12_H
-#define SPI_LIS2HH12_H
+#ifndef COMMON_H
+#define COMMON_H
 
-#include <stdint.h>
-#include <stdbool.h>
+extern int16_t accel_x_raw;
+extern int16_t accel_y_raw;
+extern int16_t accel_z_raw;
 
-typedef enum
-{
-	ACCEL_400_HZ,
-	ACCEL_50_HZ,
-	ACCEL_10_HZ,
-	ACCEL_POWER_DOWN
-} accel_sample_rates_t;
-
-void spim_init(void);
-void configure_accel_streaming_data(accel_sample_rates_t sample_rate);
-void configure_accel_free_fall_detect(void);
-void configure_accel_shake_detect(void);
-void request_accelerometer_data(void);
-void configureAccelInterrputPin(void);
-
-extern volatile bool new_accel_data_ready;
+// Values converted to milli gravities
+extern int16_t  accel_x_mg;
+extern int16_t  accel_y_mg;
+extern int16_t  accel_z_mg;
 
 #endif

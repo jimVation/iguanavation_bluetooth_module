@@ -31,7 +31,7 @@
 
 #include <stdbool.h>
 
-extern bool transmitAccelDataEnabled;
+extern bool streamDataEnabled;
 
 void update_ble_data(void);
 void handleDisconnectForStreamingData(void);

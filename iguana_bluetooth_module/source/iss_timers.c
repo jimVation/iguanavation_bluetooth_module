@@ -40,7 +40,7 @@ APP_TIMER_DEF(timer_wait_for_accel_ready);
 APP_TIMER_DEF(timer_seconds_awake);
 
 uint32_t seconds_awake = 0;
-uint8_t makeLedBlink = 0;
+bool seconds_awake_updated = false;
 uint32_t mainLoopCyclesPerSecondCount = 0;
 uint32_t mainLoopCyclesPerSecondCountMin = 0xFFFFFFFF;
 bool testingMainLoopCycles = false;
@@ -49,14 +49,7 @@ bool testingMainLoopCycles = false;
 static void timer_seconds_awake_handler(void * p_context)
 {
     seconds_awake++;
-    
-    if (seconds_awake < 10)  // Blink for first 10 seconds
-    {
-        makeLedBlink = 0;
-    }
-
-    // Notify power system of time change and do any time based events
-    update_power_management(1); // pass in 1 as number of seconds since last update
+    seconds_awake_updated = true;  // Do non time critical things in main, outside of interrupt context
 
     // For testing free time in main loop
     if (testingMainLoopCycles & (mainLoopCyclesPerSecondCount < mainLoopCyclesPerSecondCountMin))
