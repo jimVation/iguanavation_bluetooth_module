@@ -56,7 +56,7 @@ int main(void)
     nrf_gpio_cfg_output(LED_PIN);  
     nrf_gpio_pin_clear(LED_PIN);
 
-    // Create a timer to wait for acceleremeter to wake up and a timer for seconds awake
+    // Create a timer for seconds awake
     timers_init();
     power_management_init();
 #ifdef ISS_BLE_MODULE

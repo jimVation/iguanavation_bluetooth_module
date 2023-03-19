@@ -94,7 +94,7 @@ void transmitStreamData(void)
         dataPointer = NUS_HEADER_LENGTH;     // skip the length byte for now
     }
 	
-	// Get latest accel data
+	// Get latest data
     temp_buff[dataPointer++] = accel_x_mg >> 8;
     temp_buff[dataPointer++] = accel_x_mg & 0x00FF;
     temp_buff[dataPointer++] = accel_y_mg >> 8;
@@ -151,7 +151,7 @@ void updateAdvertisingData(void)
 	jaet2l_mfg_info.data.size = MFG_DATA_BYTES_SIZE;
 	jaet2l_mfg_info.data.p_data = &temp_buff[0];
 
-	// Load latest accel data into the advertising data buffer
+	// Load latest data into the advertising data buffer
 	advertising_info.srdata.p_manuf_specific_data  = &jaet2l_mfg_info;	
 	
 	// Load advertising data buffer into the advertising info structure
