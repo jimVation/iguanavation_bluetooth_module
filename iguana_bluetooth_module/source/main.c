@@ -31,10 +31,12 @@
 #include "app_error.h"
 #include "nrf_gpio.h"
 #include "ble_dfu.h"
+#include "spi_lis2hh12.h"
 
 // ISS Files
 #include "common.h"
 #include "iss_timers.h"
+#include "accel_timer.h"
 #include "power.h"
 #include "ble_service.h"
 #include "ble_data_update.h"
@@ -58,12 +60,16 @@ int main(void)
     timers_init();
     power_management_init();
 #ifdef ISS_BLE_MODULE
+    accel_startup_timer_init();
     spim_init();
 #endif
     start_ble_system();
 
     // Start the timers
     seconds_awake_timer_start();
+#ifdef ISS_BLE_MODULE
+    accel_startup_timer_start();
+#endif
 
     // Enter main loop.
     for (;;)
