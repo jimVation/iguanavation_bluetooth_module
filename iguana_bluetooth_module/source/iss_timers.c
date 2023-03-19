@@ -29,14 +29,8 @@
 #include <stdint.h>
 #include "app_timer.h"
 
-// ISS Files
-#include "power.h"
-#include "spi_lis2hh12.h"
-
-#define ACCEL_STARTUP_TIMER_TICKS           APP_TIMER_TICKS(100)
 #define SECONDS_TIMER_TICKS                 APP_TIMER_TICKS(1000)
 
-APP_TIMER_DEF(timer_wait_for_accel_ready);
 APP_TIMER_DEF(timer_seconds_awake);
 
 uint32_t seconds_awake = 0;
@@ -61,13 +55,6 @@ static void timer_seconds_awake_handler(void * p_context)
 }
 
 //****************************************************************
-static void accel_ready_timeout_handler(void * p_context)
-{
-	configureAccelInterrputPin();
-	configure_accel_streaming_data(ACCEL_400_HZ);
-}
-
-//****************************************************************
 // Initializes the timer module. This creates and starts application timers.
 void timers_init(void)
 {
@@ -75,28 +62,17 @@ void timers_init(void)
     uint32_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    // Create timers.
-    err_code = app_timer_create(&timer_wait_for_accel_ready,
-                                APP_TIMER_MODE_SINGLE_SHOT,
-                                accel_ready_timeout_handler);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = app_timer_create(&timer_seconds_awake,
-                                APP_TIMER_MODE_REPEATED, //APP_TIMER_MODE_SINGLE_SHOT,
-                                timer_seconds_awake_handler);
+    err_code = app_timer_create(&timer_seconds_awake, APP_TIMER_MODE_REPEATED, timer_seconds_awake_handler);
     APP_ERROR_CHECK(err_code);
 }
 
 //***************************************************************
 //Function for starting application timers
-void application_timers_start(void)
+void seconds_awake_timer_start(void)
 {
     ret_code_t err_code;
 
     // Start application timers	
-	err_code = app_timer_start(timer_wait_for_accel_ready, ACCEL_STARTUP_TIMER_TICKS, NULL);
-    APP_ERROR_CHECK(err_code);	
-	
 	err_code = app_timer_start(timer_seconds_awake, SECONDS_TIMER_TICKS, NULL);
     APP_ERROR_CHECK(err_code);	
 }

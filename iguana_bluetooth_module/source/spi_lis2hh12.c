@@ -52,8 +52,6 @@ static uint8_t       accel_req_data_rx_buf[7] = { 0 };    // RX buffer
 
 static uint32_t received_count = 0;
 
-volatile bool new_accel_data_ready = false;
-
 // Tracks what the next accel interrupt should mean
 typedef enum
 {

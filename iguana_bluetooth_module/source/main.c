@@ -34,7 +34,6 @@
 
 // ISS Files
 #include "common.h"
-#include "spi_lis2hh12.h"
 #include "iss_timers.h"
 #include "power.h"
 #include "ble_service.h"
@@ -58,16 +57,18 @@ int main(void)
     // Create a timer to wait for acceleremeter to wake up and a timer for seconds awake
     timers_init();
     power_management_init();
+#ifdef ISS_BLE_MODULE
     spim_init();
+#endif
     start_ble_system();
 
     // Start the timers
-    // The accelereometer configuration will happen when the accelerometer wakeup timer expires
-    application_timers_start();
+    seconds_awake_timer_start();
 
     // Enter main loop.
     for (;;)
-    {   
+    {
+#ifdef ISS_BLE_MODULE
         if (new_accel_data_ready)
         {        
             // convert raw to mg. 1 g = 4096. *1000 for mg.
@@ -81,7 +82,7 @@ int main(void)
 
             new_accel_data_ready = false;
         }
-
+#endif
         // Look for a seconds tick (updated in the timer interrupt)
         if (seconds_awake_updated)
         { 

@@ -32,7 +32,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-void application_timers_start(void);
+void seconds_awake_timer_start(void);
 void timers_init(void);
 
 extern uint32_t seconds_awake;

@@ -47,6 +47,4 @@ void configure_accel_shake_detect(void);
 void request_accelerometer_data(void);
 void configureAccelInterrputPin(void);
 
-extern volatile bool new_accel_data_ready;
-
 #endif
