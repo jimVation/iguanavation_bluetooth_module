@@ -26,17 +26,18 @@
  *
  */
 
-#ifndef POWER_H
-#define POWER_H
+#ifndef COMMON_H
+#define COMMON_H
 
-#include <stdint.h>
+extern int16_t accel_x_raw;
+extern int16_t accel_y_raw;
+extern int16_t accel_z_raw;
 
-extern uint32_t inactivityTimeLimitSeconds;
+// Values converted to milli gravities
+extern int16_t  accel_x_mg;
+extern int16_t  accel_y_mg;
+extern int16_t  accel_z_mg;
 
-void idle_state_handle(void);
-void power_management_init(void);
-void update_power_management(uint8_t seconds_since_last_update);
-
+extern volatile bool new_accel_data_ready;
 
 #endif
-

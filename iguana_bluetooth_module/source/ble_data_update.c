@@ -33,6 +33,7 @@
 #include "nrf_soc.h"
 
 // Local App files
+#include "common.h"
 #include "ble_data_update.h"
 #include "ble_service.h"
 #include "spi_lis2hh12.h"
@@ -43,7 +44,7 @@
 #define NUS_FOOTER_LENGTH   1
 
 // data configuration variables
-bool transmitAccelDataEnabled = false;
+bool streamDataEnabled = false;
 
 // Two sets of buffers (ping pong) needed for dynamically changing advertising data
 static uint8_t enc_adv_data_buffer1[BLE_GAP_ADV_SET_DATA_SIZE_MAX];
@@ -71,11 +72,11 @@ static ble_gap_adv_data_t advertisingScanResponseBuffer[2] =
 //****************************************************************
 void handleDisconnectForStreamingData(void)
 {   // turn off streaming on disconnect
-    transmitAccelDataEnabled = false;
+    streamDataEnabled = false;
 }
 
 //****************************************************************
-void transmitAccelData(void)
+void transmitStreamData(void)
 {
 	static uint8_t dataPointer = 0;
     uint8_t dataBytesAdded = 0;
@@ -125,7 +126,7 @@ void transmitAccelData(void)
 //****************************************************************
 void updateAdvertisingData(void)
 {
-	static uint8_t bufferIndex = 0;
+    static uint8_t bufferIndex = 0;
     ret_code_t errCode;
     int32_t temperature_c_0_25_increments;
 
@@ -172,9 +173,9 @@ void update_ble_data(void)
 {
     if (ble_conn_state_status(m_conn_handle) == BLE_CONN_STATUS_CONNECTED)
     {   // Things to do while connected
-        if (transmitAccelDataEnabled)
+        if (streamDataEnabled)
         {
-            transmitAccelData();
+            transmitStreamData();
         }
     }
     else

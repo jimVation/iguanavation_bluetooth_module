@@ -26,17 +26,40 @@
  *
  */
 
-#ifndef POWER_H
-#define POWER_H
 
 #include <stdint.h>
+#include "app_timer.h"
 
-extern uint32_t inactivityTimeLimitSeconds;
+// ISS Files
+#include "power.h"
+#include "spi_lis2hh12.h"
 
-void idle_state_handle(void);
-void power_management_init(void);
-void update_power_management(uint8_t seconds_since_last_update);
+#define ACCEL_STARTUP_TIMER_TICKS           APP_TIMER_TICKS(100)
 
+APP_TIMER_DEF(timer_wait_for_accel_ready);
 
-#endif
+//****************************************************************
+static void accel_ready_timeout_handler(void * p_context)
+{
+	configureAccelInterrputPin();
+	configure_accel_streaming_data(ACCEL_400_HZ);
+}
+
+//****************************************************************
+// Initializes the timer module. This creates and starts application timers.
+void accel_startup_timer_init(void)
+{
+    // Create timers.
+    ret_code_t err_code = app_timer_create(&timer_wait_for_accel_ready, APP_TIMER_MODE_SINGLE_SHOT, accel_ready_timeout_handler);
+    APP_ERROR_CHECK(err_code);
+}
+
+//***************************************************************
+//Function for starting application timers
+void accel_startup_timer_start(void)
+{
+    // Start application timers	
+	ret_code_t err_code = app_timer_start(timer_wait_for_accel_ready, ACCEL_STARTUP_TIMER_TICKS, NULL);
+    APP_ERROR_CHECK(err_code);	
+}
 

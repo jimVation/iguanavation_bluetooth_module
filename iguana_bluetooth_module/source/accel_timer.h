@@ -26,17 +26,10 @@
  *
  */
 
-#ifndef POWER_H
-#define POWER_H
+#ifndef ACCEL_STARTUP_TIMER_H
+#define ACCEL_STARTUP_TIMER_H
 
-#include <stdint.h>
-
-extern uint32_t inactivityTimeLimitSeconds;
-
-void idle_state_handle(void);
-void power_management_init(void);
-void update_power_management(uint8_t seconds_since_last_update);
-
+void accel_startup_timer_init(void);
+void accel_startup_timer_start(void);
 
 #endif
-

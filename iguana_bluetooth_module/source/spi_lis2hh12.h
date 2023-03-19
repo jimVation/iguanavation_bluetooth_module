@@ -47,15 +47,4 @@ void configure_accel_shake_detect(void);
 void request_accelerometer_data(void);
 void configureAccelInterrputPin(void);
 
-extern int16_t accel_x_raw;
-extern int16_t accel_y_raw;
-extern int16_t accel_z_raw;
-
-// Values converted to milli gravities
-extern int16_t  accel_x_mg;
-extern int16_t  accel_y_mg;
-extern int16_t  accel_z_mg;
-
-extern volatile bool new_accel_data_ready;
-
 #endif

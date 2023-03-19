@@ -32,11 +32,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-void application_timers_start(void);
+void seconds_awake_timer_start(void);
 void timers_init(void);
 
 extern uint32_t seconds_awake;
-extern uint8_t makeLedBlink;
+extern bool seconds_awake_updated;
 extern uint32_t mainLoopCyclesPerSecondCount;
 extern uint32_t mainLoopCyclesPerSecondCountMin;
 extern bool testingMainLoopCycles;
