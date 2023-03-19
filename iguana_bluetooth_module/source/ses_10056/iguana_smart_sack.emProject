@@ -59,6 +59,7 @@
       </file>
       <file file_name="../power.c" />
       <file file_name="../power.h" />
+      <file file_name="power_pca10056.c" />
       <file file_name="../sdk_config.h" />
     </folder>
     <folder Name="None">

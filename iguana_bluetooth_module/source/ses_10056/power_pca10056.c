@@ -26,17 +26,49 @@
  *
  */
 
-#ifndef POWER_H
-#define POWER_H
-
 #include <stdint.h>
 
-extern uint32_t inactivityTimeLimitSeconds;
+#include "nrf_pwr_mgmt.h"
 
-void idle_state_handle(void);
-void power_management_init(void);
-void update_power_management(uint8_t seconds_since_last_update);
+#include "power.h"
+#include "nrf_gpio.h"
 
+uint32_t inactivity_timer_seconds = 0;
 
-#endif
+typedef enum
+{
+    POWER_STATE_ON,
+    POWER_STATE_GOING_TO_SLEEP,
+    POWER_STATE_WAIT_FOR_SLEEP,
+} power_states_t;
+
+//******************************************************************
+void update_power_management(uint8_t seconds_since_last_update)
+{
+	static power_states_t power_state = POWER_STATE_ON;
+	
+	inactivity_timer_seconds += seconds_since_last_update;
+	
+	switch(power_state)
+	{
+		case POWER_STATE_ON:
+			if (inactivity_timer_seconds > inactivityTimeLimitSeconds)
+			{
+				power_state = POWER_STATE_GOING_TO_SLEEP;
+			}
+			break;
+		
+		case POWER_STATE_GOING_TO_SLEEP:
+            // Turn off the LED
+            nrf_gpio_pin_set(LED_PIN);
+            nrf_gpio_cfg_default(LED_PIN);  // disconnect pin to minimize current 
+
+            nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);	// system off mode	
+            power_state = POWER_STATE_WAIT_FOR_SLEEP;
+            break;
+
+        case POWER_STATE_WAIT_FOR_SLEEP:
+            break;
+	}
+}
 

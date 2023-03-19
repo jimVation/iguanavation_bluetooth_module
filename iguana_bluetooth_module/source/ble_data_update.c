@@ -36,6 +36,7 @@
 #include "common.h"
 #include "ble_data_update.h"
 #include "ble_service.h"
+#include "spi_lis2hh12.h"
 #include "ble_nus_main.h"
 
 #define NUS_DATA_BUFFER_LENGTH     240

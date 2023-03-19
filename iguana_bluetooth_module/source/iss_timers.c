@@ -68,7 +68,7 @@ void timers_init(void)
 
 //***************************************************************
 //Function for starting application timers
-void application_timers_start(void)
+void seconds_awake_timer_start(void)
 {
     ret_code_t err_code;
 

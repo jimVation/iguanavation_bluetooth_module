@@ -44,7 +44,6 @@
 #include "ble_nus_iss.h"
 #include "ble_nus_main.h"
 #include "ble_dis.h"
-#include "ble_nus_main.h"
 
 // dfu files
 #include "ble_dfu.h"

@@ -38,4 +38,6 @@ extern int16_t  accel_x_mg;
 extern int16_t  accel_y_mg;
 extern int16_t  accel_z_mg;
 
+extern volatile bool new_accel_data_ready;
+
 #endif

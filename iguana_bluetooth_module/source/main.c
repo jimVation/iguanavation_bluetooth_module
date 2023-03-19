@@ -57,14 +57,32 @@ int main(void)
     // Create a timer for seconds awake
     timers_init();
     power_management_init();
+#ifdef ISS_BLE_MODULE
+    spim_init();
+#endif
     start_ble_system();
 
     // Start the timers
-    application_timers_start();
+    seconds_awake_timer_start();
 
     // Enter main loop.
     for (;;)
     {
+#ifdef ISS_BLE_MODULE
+        if (new_accel_data_ready)
+        {        
+            // convert raw to mg. 1 g = 4096. *1000 for mg.
+            // Do *1000 first to avoid losing data.
+            // Divide by 4096 by using >> 12. 
+            accel_x_mg = (int16_t)((((int32_t)accel_x_raw) * 1000) >> 12);        
+            accel_y_mg = (int16_t)((((int32_t)accel_y_raw) * 1000) >> 12);
+            accel_z_mg = (int16_t)((((int32_t)accel_z_raw) * 1000) >> 12);
+          
+            update_ble_data();
+
+            new_accel_data_ready = false;
+        }
+#endif
         // Look for a seconds tick (updated in the timer interrupt)
         if (seconds_awake_updated)
         { 

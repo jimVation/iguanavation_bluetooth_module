@@ -27,6 +27,7 @@
  */
 
  #include <stdint.h>
+ #include <stdbool.h>
 
 int16_t  accel_x_raw;
 int16_t  accel_y_raw;
@@ -36,3 +37,6 @@ int16_t  accel_z_raw;
 int16_t  accel_x_mg = 0;
 int16_t  accel_y_mg = 0;
 int16_t  accel_z_mg = 0;
+
+extern volatile bool new_accel_data_ready = false;
+

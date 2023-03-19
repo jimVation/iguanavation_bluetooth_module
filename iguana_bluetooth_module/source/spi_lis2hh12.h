@@ -26,17 +26,25 @@
  *
  */
 
-#ifndef POWER_H
-#define POWER_H
+#ifndef SPI_LIS2HH12_H
+#define SPI_LIS2HH12_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
-extern uint32_t inactivityTimeLimitSeconds;
+typedef enum
+{
+	ACCEL_400_HZ,
+	ACCEL_50_HZ,
+	ACCEL_10_HZ,
+	ACCEL_POWER_DOWN
+} accel_sample_rates_t;
 
-void idle_state_handle(void);
-void power_management_init(void);
-void update_power_management(uint8_t seconds_since_last_update);
-
+void spim_init(void);
+void configure_accel_streaming_data(accel_sample_rates_t sample_rate);
+void configure_accel_free_fall_detect(void);
+void configure_accel_shake_detect(void);
+void request_accelerometer_data(void);
+void configureAccelInterrputPin(void);
 
 #endif
-

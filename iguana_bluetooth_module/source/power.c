@@ -30,7 +30,6 @@
 #include "nrf_sdh.h"
 #include "app_error.h"
 #include "app_timer.h"
-#include "nrf_gpio.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -41,16 +40,7 @@
 #error Awake Time to short to allow for OTA updates
 #endif
 
-typedef enum
-{
-	POWER_STATE_ON,
-	POWER_STATE_GOING_TO_SLEEP,
-    POWER_STATE_WAIT_FOR_SLEEP,
-} power_states_t;
-
-uint32_t inactivity_timer_seconds = 0;
 uint32_t inactivityTimeLimitSeconds = GO_TO_SLEEP_SECONDS;  // seconds of inactivity (no kicks) until we go to sleep
-
 
 //******************************************************************
 void power_management_init(void)
@@ -68,45 +58,8 @@ void idle_state_handle(void)
 }
 
 //******************************************************************
-void reset_inactivity_timer(void)
-{
-	inactivity_timer_seconds = 0;
-}
-
-//******************************************************************
-void update_power_management(uint8_t seconds_since_last_update)
-{
-	static power_states_t power_state = POWER_STATE_ON;
-	
-	inactivity_timer_seconds += seconds_since_last_update;
-	
-	switch(power_state)
-	{
-		case POWER_STATE_ON:
-			if (inactivity_timer_seconds > inactivityTimeLimitSeconds)
-			{
-				power_state = POWER_STATE_GOING_TO_SLEEP;
-			}
-			break;
-		
-		case POWER_STATE_GOING_TO_SLEEP:
-            // Turn off the LED
-            nrf_gpio_pin_set(LED_PIN);
-            nrf_gpio_cfg_default(LED_PIN);  // disconnect pin to minimize current 
-
-            nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);	// system off mode	
-            power_state = POWER_STATE_WAIT_FOR_SLEEP;
-            break;
-
-        case POWER_STATE_WAIT_FOR_SLEEP:
-            break;
-	}
-}
-
-//******************************************************************
-// During shutdown procedures, this function will be called at a 1 second interval
-// untill the function returns true. When the function returns true, it means that the
-// app is ready to reset to DFU mode.
+// During shutdown procedures, this function will be called at a 1 second interval untill the function 
+// returns true. When the function returns true, it means that the app is ready to reset to DFU mode.
 static bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
 {
     bool m_ready_for_reset = true;
@@ -116,7 +69,7 @@ static bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
         case NRF_PWR_MGMT_EVT_PREPARE_DFU:
             if (!m_ready_for_reset)
             {
-                return false;
+              return false;
             }
             else
             {
