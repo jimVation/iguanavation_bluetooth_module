@@ -331,9 +331,9 @@ void configure_accel_shake_detect(void)
 		m_tx_buf[0] = 0x30;   // write to address for IG_CFG1
 		m_tx_buf[1] = 0x2A;   // IG_CFG1, shake detect (detect high event on X or Y or Z)
 		m_tx_buf[2] = 0x00;   // IG_SRC1, Int gen 1 status register (read only)
-		m_tx_buf[3] = 0xA0;   // IG_THS_X1, Threshold =  mg [ (2/256)* =  mg]
-		m_tx_buf[4] = 0xA0;   // IG_THS_Y1, Threshold =  mg [ (2/256)* =  mg]
-		m_tx_buf[5] = 0xA0;   // IG_THS_Z1, Threshold =  mg [ (2/256)* =  mg]
+		m_tx_buf[3] = 0x90;   // IG_THS_X1, Threshold =  mg [ (2/256)* =  mg]
+		m_tx_buf[4] = 0x90;   // IG_THS_Y1, Threshold =  mg [ (2/256)* =  mg]
+		m_tx_buf[5] = 0x90;   // IG_THS_Z1, Threshold =  mg [ (2/256)* =  mg]
 		m_tx_buf[6] = 0x01;   // IG_DUR1, no wait, duration = 1 sample event duration
 		
 		nrfx_spim_xfer_desc_t xfer_desc = NRFX_SPIM_XFER_TRX(m_tx_buf, 7, m_rx_buf, 7);

@@ -41,6 +41,8 @@
 #include "ble_service.h"
 #include "ble_data_update.h"
 
+#define ADVERTISING_TRANSMIT_POWER    4   // 4db is the max transmission power
+
 //****************************************************************
 int main(void)
 {
@@ -70,6 +72,9 @@ int main(void)
 #ifdef ISS_BLE_MODULE
     accel_startup_timer_start();
 #endif
+
+    // Increase power for advertising mode to extend range
+    set_advertsing_power(ADVERTISING_TRANSMIT_POWER); // 4db is the max transmission power
 
     // Enter main loop.
     for (;;)

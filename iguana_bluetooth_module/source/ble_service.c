@@ -499,7 +499,7 @@ static void disconnect(uint16_t conn_handle, void * p_context)
 
 //****************************************************************
 void set_advertsing_power(int8_t advertisingPower)
-{   // I tried testing this but I can't tell that it's working
+{   // only applies to advertising power, not connected power
     sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, advertising_module.adv_handle, advertisingPower);
 }
 
