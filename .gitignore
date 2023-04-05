@@ -7,3 +7,4 @@
 *.elf
 *.zip
 *.emSession
+*.jlink
