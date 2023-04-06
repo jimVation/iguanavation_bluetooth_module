@@ -20,9 +20,9 @@
       arm_target_device_name="nRF52810_xxAA"
       arm_target_interface_type="SWD"
       c_preprocessor_definitions="BL_SETTINGS_ACCESS_ONLY;ISS_BLE_MODULE;FLOAT_ABI_SOFT;INITIALIZE_USER_SECTIONS;NO_VTOR_CONFIG;NRF52810_XXAA;NRF52_PAN_74;NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3;NRF_DFU_SVCI_ENABLED;NRF_DFU_TRANSPORT_BLE=1;NRF_SD_BLE_API_VERSION=6;S112;SOFTDEVICE_PRESENT;SWI_DISABLE0;LED_PIN=4"
-      c_user_include_directories="../;../../sdk/components;../../sdk/components/ble/ble_advertising;../../sdk/components/ble/ble_link_ctx_manager;../../sdk/components/ble/ble_services/ble_dfu;../../sdk/components/ble/ble_services/ble_dis;../../sdk/components/ble/common;../../sdk/components/ble/nrf_ble_gatt;../../sdk/components/ble/nrf_ble_qwr;../../sdk/components/ble/peer_manager;../../sdk/components/boards;../../sdk/components/libraries/atomic;../../sdk/components/libraries/atomic_fifo;../../sdk/components/libraries/atomic_flags;../../sdk/components/libraries/balloc;../../sdk/components/libraries/bootloader;../../sdk/components/libraries/bootloader/ble_dfu;../../sdk/components/libraries/bootloader/dfu;../../sdk/components/libraries/bsp;../../sdk/components/libraries/button;../../sdk/components/libraries/crc16;../../sdk/components/libraries/delay;../../sdk/components/libraries/experimental_section_vars;../../sdk/components/libraries/fds;../../sdk/components/libraries/fstorage;../../sdk/components/libraries/log;../../sdk/components/libraries/log/src;../../sdk/components/libraries/memobj;../../sdk/components/libraries/mutex;../../sdk/components/libraries/pwr_mgmt;../../sdk/components/libraries/ringbuf;../../sdk/components/libraries/scheduler;../../sdk/components/libraries/strerror;../../sdk/components/libraries/svc;../../sdk/components/libraries/timer;../../sdk/components/libraries/util;../../sdk/components/softdevice/common;../../sdk/components/softdevice/s112/headers;../../sdk/components/softdevice/s112/headers/nrf52;../../sdk/components/toolchain/cmsis/include;../../sdk/external/fprintf;../../sdk/integration/nrfx;../../sdk/integration/nrfx/legacy;../../sdk/modules/nrfx;../../sdk/modules/nrfx/drivers/include;../../sdk/modules/nrfx/hal;../../sdk/modules/nrfx/mdk"
+      c_user_include_directories="../;../../../sdk/components;../../../sdk/components/ble/ble_advertising;../../../sdk/components/ble/ble_link_ctx_manager;../../../sdk/components/ble/ble_services/ble_dfu;../../../sdk/components/ble/ble_services/ble_dis;../../../sdk/components/ble/common;../../../sdk/components/ble/nrf_ble_gatt;../../../sdk/components/ble/nrf_ble_qwr;../../../sdk/components/ble/peer_manager;../../../sdk/components/boards;../../../sdk/components/libraries/atomic;../../../sdk/components/libraries/atomic_fifo;../../../sdk/components/libraries/atomic_flags;../../../sdk/components/libraries/balloc;../../../sdk/components/libraries/bootloader;../../../sdk/components/libraries/bootloader/ble_dfu;../../../sdk/components/libraries/bootloader/dfu;../../../sdk/components/libraries/bsp;../../../sdk/components/libraries/button;../../../sdk/components/libraries/crc16;../../../sdk/components/libraries/delay;../../../sdk/components/libraries/experimental_section_vars;../../../sdk/components/libraries/fds;../../../sdk/components/libraries/fstorage;../../../sdk/components/libraries/log;../../../sdk/components/libraries/log/src;../../../sdk/components/libraries/memobj;../../../sdk/components/libraries/mutex;../../../sdk/components/libraries/pwr_mgmt;../../../sdk/components/libraries/ringbuf;../../../sdk/components/libraries/scheduler;../../../sdk/components/libraries/strerror;../../../sdk/components/libraries/svc;../../../sdk/components/libraries/timer;../../../sdk/components/libraries/util;../../../sdk/components/softdevice/common;../../../sdk/components/softdevice/s112/headers;../../../sdk/components/softdevice/s112/headers/nrf52;../../../sdk/components/toolchain/cmsis/include;../../../sdk/external/fprintf;../../../sdk/integration/nrfx;../../../sdk/integration/nrfx/legacy;../../../sdk/modules/nrfx;../../../sdk/modules/nrfx/drivers/include;../../../sdk/modules/nrfx/hal;../../../sdk/modules/nrfx/mdk"
       debug_additional_load_file=""
-      debug_register_definition_file="../../sdk/modules/nrfx/mdk/nrf52810.svd"
+      debug_register_definition_file="../../../sdk/modules/nrfx/mdk/nrf52810.svd"
       debug_start_from_entry_point_symbol="No"
       debug_target_connection="J-Link"
       gcc_debugging_level="Level 3"
@@ -35,7 +35,7 @@
       linker_section_placement_file="flash_placement.xml"
       linker_section_placement_macros="FLASH_PH_START=0x0;FLASH_PH_SIZE=0x30000;RAM_PH_START=0x20000000;RAM_PH_SIZE=0x6000;FLASH_START=0x19000;FLASH_SIZE=0xf000;RAM_START=0x20002490;RAM_SIZE=0x3b70"
       linker_section_placements_segments="FLASH RX 0x0 0x30000;RAM RWX 0x20000000 0x6000;uicr_bootloader_start_address RX 0x00000FF8 0x4"
-      macros="CMSIS_CONFIG_TOOL=../../sdk/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar"
+      macros="CMSIS_CONFIG_TOOL=../../../sdk/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar"
       project_directory=""
       project_type="Executable" />
     <folder Name="Application">
@@ -68,94 +68,94 @@
       <file file_name="../spi_lis2hh12.h" />
     </folder>
     <folder Name="None">
-      <file file_name="../../sdk/modules/nrfx/mdk/ses_startup_nrf52810.s" />
-      <file file_name="../../sdk/modules/nrfx/mdk/ses_startup_nrf_common.s" />
-      <file file_name="../../sdk/modules/nrfx/mdk/system_nrf52810.c" />
+      <file file_name="../../../sdk/modules/nrfx/mdk/ses_startup_nrf52810.s" />
+      <file file_name="../../../sdk/modules/nrfx/mdk/ses_startup_nrf_common.s" />
+      <file file_name="../../../sdk/modules/nrfx/mdk/system_nrf52810.c" />
     </folder>
     <folder Name="Segger Startup Files">
       <file file_name="$(StudioDir)/source/thumb_crt0.s" />
     </folder>
     <folder Name="nRF_BLE">
-      <file file_name="../../sdk/components/ble/peer_manager/auth_status_tracker.c" />
-      <file file_name="../../sdk/components/ble/common/ble_advdata.c" />
-      <file file_name="../../sdk/components/ble/ble_advertising/ble_advertising.c" />
-      <file file_name="../../sdk/components/ble/common/ble_conn_params.c" />
-      <file file_name="../../sdk/components/ble/common/ble_conn_state.c" />
-      <file file_name="../../sdk/components/ble/ble_services/ble_dis/ble_dis.c" />
-      <file file_name="../../sdk/components/ble/ble_services/ble_dis/ble_dis.h" />
-      <file file_name="../../sdk/components/ble/ble_link_ctx_manager/ble_link_ctx_manager.c" />
-      <file file_name="../../sdk/components/ble/ble_link_ctx_manager/ble_link_ctx_manager.h" />
-      <file file_name="../../sdk/components/ble/common/ble_srv_common.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/gatt_cache_manager.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/gatts_cache_manager.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/id_manager.c" />
-      <file file_name="../../sdk/components/ble/nrf_ble_gatt/nrf_ble_gatt.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/peer_data_storage.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/peer_database.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/peer_id.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/peer_manager.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/peer_manager_handler.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/pm_buffer.c" />
-      <file file_name="../../sdk/components/ble/peer_manager/security_dispatcher.c">
+      <file file_name="../../../sdk/components/ble/peer_manager/auth_status_tracker.c" />
+      <file file_name="../../../sdk/components/ble/common/ble_advdata.c" />
+      <file file_name="../../../sdk/components/ble/ble_advertising/ble_advertising.c" />
+      <file file_name="../../../sdk/components/ble/common/ble_conn_params.c" />
+      <file file_name="../../../sdk/components/ble/common/ble_conn_state.c" />
+      <file file_name="../../../sdk/components/ble/ble_services/ble_dis/ble_dis.c" />
+      <file file_name="../../../sdk/components/ble/ble_services/ble_dis/ble_dis.h" />
+      <file file_name="../../../sdk/components/ble/ble_link_ctx_manager/ble_link_ctx_manager.c" />
+      <file file_name="../../../sdk/components/ble/ble_link_ctx_manager/ble_link_ctx_manager.h" />
+      <file file_name="../../../sdk/components/ble/common/ble_srv_common.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/gatt_cache_manager.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/gatts_cache_manager.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/id_manager.c" />
+      <file file_name="../../../sdk/components/ble/nrf_ble_gatt/nrf_ble_gatt.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/peer_data_storage.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/peer_database.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/peer_id.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/peer_manager.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/peer_manager_handler.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/pm_buffer.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/security_dispatcher.c">
         <configuration Name="Release" build_exclude_from_build="No" />
       </file>
-      <file file_name="../../sdk/components/ble/peer_manager/security_manager.c" />
+      <file file_name="../../../sdk/components/ble/peer_manager/security_manager.c" />
     </folder>
     <folder Name="nRF_DFU">
-      <file file_name="../../sdk/components/ble/ble_services/ble_dfu/ble_dfu.c" />
-      <file file_name="../../sdk/components/ble/ble_services/ble_dfu/ble_dfu.h" />
-      <file file_name="../../sdk/components/ble/ble_services/ble_dfu/ble_dfu_unbonded.c" />
+      <file file_name="../../../sdk/components/ble/ble_services/ble_dfu/ble_dfu.c" />
+      <file file_name="../../../sdk/components/ble/ble_services/ble_dfu/ble_dfu.h" />
+      <file file_name="../../../sdk/components/ble/ble_services/ble_dfu/ble_dfu_unbonded.c" />
     </folder>
     <folder Name="nRF_Drivers">
-      <file file_name="../../sdk/integration/nrfx/legacy/nrf_drv_clock.c" />
-      <file file_name="../../sdk/modules/nrfx/hal/nrf_spim.h" />
-      <file file_name="../../sdk/modules/nrfx/soc/nrfx_atomic.c" />
-      <file file_name="../../sdk/modules/nrfx/drivers/src/nrfx_clock.c">
+      <file file_name="../../../sdk/integration/nrfx/legacy/nrf_drv_clock.c" />
+      <file file_name="../../../sdk/modules/nrfx/hal/nrf_spim.h" />
+      <file file_name="../../../sdk/modules/nrfx/soc/nrfx_atomic.c" />
+      <file file_name="../../../sdk/modules/nrfx/drivers/src/nrfx_clock.c">
         <configuration Name="Release" build_exclude_from_build="No" />
       </file>
-      <file file_name="../../sdk/modules/nrfx/drivers/src/nrfx_gpiote.c" />
-      <file file_name="../../sdk/modules/nrfx/drivers/src/prs/nrfx_prs.c" />
-      <file file_name="../../sdk/modules/nrfx/drivers/src/nrfx_spim.c" />
-      <file file_name="../../sdk/modules/nrfx/drivers/include/nrfx_spim.h" />
+      <file file_name="../../../sdk/modules/nrfx/drivers/src/nrfx_gpiote.c" />
+      <file file_name="../../../sdk/modules/nrfx/drivers/src/prs/nrfx_prs.c" />
+      <file file_name="../../../sdk/modules/nrfx/drivers/src/nrfx_spim.c" />
+      <file file_name="../../../sdk/modules/nrfx/drivers/include/nrfx_spim.h" />
     </folder>
     <folder Name="nRF_Libraries">
-      <file file_name="../../sdk/components/libraries/util/app_error.c" />
-      <file file_name="../../sdk/components/libraries/util/app_error_handler_gcc.c" />
-      <file file_name="../../sdk/components/libraries/util/app_error_weak.c">
+      <file file_name="../../../sdk/components/libraries/util/app_error.c" />
+      <file file_name="../../../sdk/components/libraries/util/app_error_handler_gcc.c" />
+      <file file_name="../../../sdk/components/libraries/util/app_error_weak.c">
         <configuration Name="Release" gcc_optimization_level="None" />
       </file>
-      <file file_name="../../sdk/components/libraries/scheduler/app_scheduler.c" />
-      <file file_name="../../sdk/components/libraries/timer/app_timer.c" />
-      <file file_name="../../sdk/components/libraries/timer/app_timer.h" />
-      <file file_name="../../sdk/components/libraries/util/app_util_platform.c" />
-      <file file_name="../../sdk/components/libraries/crc16/crc16.c" />
-      <file file_name="../../sdk/components/libraries/fds/fds.c" />
-      <file file_name="../../sdk/components/libraries/util/nrf_assert.c" />
-      <file file_name="../../sdk/components/libraries/atomic_fifo/nrf_atfifo.c" />
-      <file file_name="../../sdk/components/libraries/atomic_flags/nrf_atflags.c" />
-      <file file_name="../../sdk/components/libraries/atomic/nrf_atomic.c">
+      <file file_name="../../../sdk/components/libraries/scheduler/app_scheduler.c" />
+      <file file_name="../../../sdk/components/libraries/timer/app_timer.c" />
+      <file file_name="../../../sdk/components/libraries/timer/app_timer.h" />
+      <file file_name="../../../sdk/components/libraries/util/app_util_platform.c" />
+      <file file_name="../../../sdk/components/libraries/crc16/crc16.c" />
+      <file file_name="../../../sdk/components/libraries/fds/fds.c" />
+      <file file_name="../../../sdk/components/libraries/util/nrf_assert.c" />
+      <file file_name="../../../sdk/components/libraries/atomic_fifo/nrf_atfifo.c" />
+      <file file_name="../../../sdk/components/libraries/atomic_flags/nrf_atflags.c" />
+      <file file_name="../../../sdk/components/libraries/atomic/nrf_atomic.c">
         <configuration Name="Release" build_exclude_from_build="No" />
       </file>
-      <file file_name="../../sdk/components/libraries/fstorage/nrf_fstorage.c">
+      <file file_name="../../../sdk/components/libraries/fstorage/nrf_fstorage.c">
         <configuration Name="Release" build_exclude_from_build="No" />
       </file>
-      <file file_name="../../sdk/components/libraries/fstorage/nrf_fstorage_sd.c">
+      <file file_name="../../../sdk/components/libraries/fstorage/nrf_fstorage_sd.c">
         <configuration Name="Release" build_exclude_from_build="No" />
       </file>
-      <file file_name="../../sdk/components/libraries/pwr_mgmt/nrf_pwr_mgmt.c">
+      <file file_name="../../../sdk/components/libraries/pwr_mgmt/nrf_pwr_mgmt.c">
         <configuration Name="Release" gcc_optimization_level="None" />
       </file>
-      <file file_name="../../sdk/components/libraries/experimental_section_vars/nrf_section_iter.c" />
+      <file file_name="../../../sdk/components/libraries/experimental_section_vars/nrf_section_iter.c" />
     </folder>
     <folder Name="nRF_SVC">
-      <file file_name="../../sdk/components/libraries/bootloader/dfu/nrf_dfu_svci.c" />
+      <file file_name="../../../sdk/components/libraries/bootloader/dfu/nrf_dfu_svci.c" />
     </folder>
     <folder Name="nRF_SoftDevice">
-      <file file_name="../../sdk/components/softdevice/common/nrf_sdh.c" />
-      <file file_name="../../sdk/components/softdevice/common/nrf_sdh_ble.c">
+      <file file_name="../../../sdk/components/softdevice/common/nrf_sdh.c" />
+      <file file_name="../../../sdk/components/softdevice/common/nrf_sdh_ble.c">
         <configuration Name="Release" gcc_optimization_level="None" />
       </file>
-      <file file_name="../../sdk/components/softdevice/common/nrf_sdh_soc.c" />
+      <file file_name="../../../sdk/components/softdevice/common/nrf_sdh_soc.c" />
     </folder>
   </project>
 </solution>
